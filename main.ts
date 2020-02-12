@@ -1,3 +1,8 @@
+function displayUserData () {
+    user_name = arcadeDB.getTextValue("NAME")
+    user_age = arcadeDB.getNumberValue("AGE")
+    game.showLongText(arcadeDB.toLines(["Player: " + user_name, "Age: " + user_age]), DialogLayout.Full)
+}
 function displayStoredScores () {
     scores = arcadeDB.toLine("Number of scores: " + convertToText(arcadeDB.listCount("SCORES")))
     for (let index = 0; index <= arcadeDB.listCount("SCORES") - 1; index++) {
@@ -6,29 +11,29 @@ function displayStoredScores () {
     }
     game.showLongText(scores, DialogLayout.Full)
 }
-function displayUserData () {
-    user_name = arcadeDB.getTextValue("NAME")
-    user_age = arcadeDB.getNumberValue("AGE")
-    game.showLongText(arcadeDB.toLines(["Player: " + user_name, "Age: " + user_age]), DialogLayout.Full)
-}
-function askNameAndAge () {
-    user_name = game.askForString("Enter your player name")
-    user_age = game.askForNumber("How old are you ?")
-    arcadeDB.setTextValue("NAME", user_name)
-    arcadeDB.setNumberValue("AGE", user_age)
-}
-let user_age = 0
-let user_name = ""
 let score_at_index = ""
 let scores = ""
-if (arcadeDB.exists() && game.ask("FOUND EXISTING DATABASE", "Do you want to delete it?")) {
-    arcadeDB.deleteAll()
-}
+let user_age = 0
+let user_name = ""
 if (!(arcadeDB.exists())) {
-    askNameAndAge()
-    arcadeDB.listAddValue("SCORES", 226)
-    arcadeDB.listAddValue("SCORES", 669)
-    arcadeDB.listAddValue("SCORES", 13)
+    game.splash("Database not found", "Filling with sample data")
+    arcadeDB.setTextValue("NAME", "JOHN")
+    arcadeDB.setNumberValue("AGE", 30)
+    arcadeDB.listAddValue("SCORES", 1058)
+    arcadeDB.listAddValue("SCORES", 50)
+    arcadeDB.listAddValue("SCORES", 30)
 }
 displayUserData()
 displayStoredScores()
+if (arcadeDB.listCount("SCORES") > 0 && game.ask("TEST DELETING A LIST", "Delete scores now ?")) {
+    arcadeDB.deleteList("SCORES")
+    displayStoredScores()
+}
+if (game.ask("TEST DELETING DATABASE", "Do you want to delete it?")) {
+    arcadeDB.deleteAll()
+}
+if (!(arcadeDB.exists())) {
+    game.splash("Database removed from flash", "Restar console")
+} else {
+    game.splash("Database in flash memory", "Restar console to test")
+}

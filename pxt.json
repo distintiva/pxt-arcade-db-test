@@ -1,9 +1,9 @@
 {
-    "name": "settings",
+    "name": "arcade database test",
     "dependencies": {
         "device": "*",
         "jacdac-game": "*",
-        "pxt-arcade-settings": "github:distintiva/pxt-arcade-database#master"
+        "pxt-arcade-database": "github:distintiva/pxt-arcade-database#2dc0e3ea81635b0f924dcf3960f7aed34f0b87bb"
     },
     "description": "",
     "files": [
@@ -11,7 +11,7 @@
         "main.ts",
         "README.md"
     ],
-    "preferredEditor": "tsprj",
+    "preferredEditor": "blocksprj",
     "testFiles": [
         "test.ts"
     ]
